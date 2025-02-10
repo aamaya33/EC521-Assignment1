@@ -11,5 +11,5 @@ def caesar_cypher(file):
             decrypted += chr((ord(ch)-shift_len)%128)
         print(f"Shift len = {shift_len}: {decrypted}")  
 
-caesar_cypher('challenge1.txt')
+caesar_cypher('challenge1/challenge1.txt')
             
