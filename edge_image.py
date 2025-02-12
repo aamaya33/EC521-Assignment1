@@ -16,13 +16,20 @@ def cannyFilter(file):
 def sobelFilter(file):
     img = cv2.imread(file)
     img_blur = cv2.GaussianBlur(img, (5,5), 0)
+    sobelx = cv2.Sobel(src=img_blur, ddepth=cv2.CV_64F, dx=1, dy=0, ksize=5)
+    sobely = cv2.Sobel(src=img_blur, ddepth=cv2.CV_64F, dx=0, dy=1, ksize=5)
     sobelxy = cv2.Sobel(src=img_blur, ddepth=cv2.CV_64F, dx=1, dy=1, ksize=5)
 
     # Tried with x and y, but xy gives best image
+    cv2.imshow('Sobel X', sobelx)
+    cv2.waitKey(0)
+    cv2.imshow('Sobel Y', sobely)
+    cv2.waitKey(0)
     cv2.imshow('Sobel XY', sobelxy)
     cv2.waitKey(0)
 
 
 
-file = 'challenge4/dif_skip/50pimg.ppm'
+file = 'challenge4/img.ppm'
+cannyFilter(file)
 sobelFilter(file)

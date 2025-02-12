@@ -1,0 +1,1 @@
+Xor with header of challenge3.zip to find the key and go from there 
