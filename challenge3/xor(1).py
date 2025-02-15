@@ -1,34 +1,12 @@
-plaintext = "EC521VERYSECRETTEXT"
+header = bytes([0x50, 0x4B, 0x03, 0x04, 0x0A, 0x00]) # first 6 bytes of valid zip file header
 
-key = "TERRIERS"
+with open('challenge3', 'rb') as f:
+	data = f.read()
 
-ciphertext = ""
+key = bytes([data[i] ^ header[i] for i in range(6)]) # xor with the header to get the key
+print(key)
+file_content = bytes([data[i] ^ key[i % 6] for i in range(len(data))]) 
 
-for pos in range(len(plaintext)):
-	ciphertext += chr(ord(plaintext[pos])^ord(key[pos%len(key)]))
-
-#print(ciphertext)
-
-plaintext2 = ""
-
-for pos in range(len(ciphertext)):
-	plaintext2 += chr(ord(ciphertext[pos])^ord(key[pos%len(key)]))
-
-#print(plaintext2)
-
-plain = 'plainheader'
-enc = 'header'
-
-with open(plain, 'r') as f:
-	plain = f.read()
-	
-with open(enc, 'r') as f:
-	enc = f.read()
-
-recoveredkey = ""
-
-for pos in range(len(enc)):
-	recoveredkey += chr(ord(enc[pos])^ord(plain[pos%len(plain)]))
-
-print(recoveredkey)
+with open('challenge3.zip', 'wb') as f:
+	f.write(header + key + file_content)
 
